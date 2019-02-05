@@ -1,0 +1,32 @@
+questions:
+- variable: serviceAccount
+  default: "registry-updater"
+  description: "The service account to run our credential updater as (will be created)"
+  type: string
+  required: false
+  label: Service Account
+  group: "Kubernetes Settings"
+- variable: accountId
+  description: The account ID of the ECR repository (https://XXXXX.dkr.ecr.${REGION}.amazonaws.com)
+  type: string
+  required: true
+  label: ECR Account ID
+  group: AWS Settings
+- variable: aws.region
+  description: The AWS region to perform actions in
+  type: string
+  required: true
+  label: Region
+  group: AWS Settings
+- variable: aws.accessKeyId
+  description: The AWS Access Key
+  type: string
+  required: true
+  label: Access Key
+  group: AWS Settings
+- variable: aws.secretKey
+  description: The AWS Secret Key
+  type: string
+  required: true
+  label: Secret Key
+  group: AWS Settings

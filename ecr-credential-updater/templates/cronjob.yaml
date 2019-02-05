@@ -1,0 +1,61 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+  name: {{ template "ecr-credential-updater.fullname" . }}
+spec:
+  concurrencyPolicy: Allow
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - command:
+            - /bin/sh
+            - -c
+            - |-
+              ACCOUNT={{ .Values.accountId }}
+              REGION={{ .Values.aws.region }}
+              SECRET_NAME=${REGION}-ecr-registry
+              EMAIL=anymail.doesnt.matter@email.com
+              TOKEN=`aws ecr get-login --region ${REGION} --registry-ids ${ACCOUNT} | cut -d' ' -f6`
+              echo "ENV variables setup done."
+              kubectl delete secret --ignore-not-found $SECRET_NAME
+              kubectl create secret docker-registry $SECRET_NAME \
+              --docker-server=https://${ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com \
+              --docker-username=AWS \
+              --docker-password="${TOKEN}" \
+              --docker-email="${EMAIL}"
+              echo "Secret created by name. $SECRET_NAME"
+              kubectl patch serviceaccount default -p '{"imagePullSecrets":[{"name":"'$SECRET_NAME'"}]}'
+              echo "All done."
+            env:
+            - name: AWS_DEFAULT_REGION
+              value: {{ .Values.aws.region | quoted }}
+            - name: AWS_SECRET_ACCESS_KEY
+              value: {{ .Values.aws.secretKey | quoted }}
+            - name: AWS_ACCESS_KEY_ID
+              value: {{ .Values.aws.accessKeyId | quoted }}
+            image: odaniait/aws-kubectl:latest
+            imagePullPolicy: IfNotPresent
+            name: {{ template "ecr-credential-updater.fullname" . }}
+            resources: {}
+            securityContext:
+              capabilities: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+          dnsPolicy: Default
+          hostNetwork: true
+          restartPolicy: Never
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+          serviceAccount: {{ .Values.serviceAccount }}
+  schedule: 0 */6 * * *
+  successfulJobsHistoryLimit: 1
+  suspend: false
