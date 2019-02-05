@@ -26,7 +26,7 @@ spec:
               echo "ENV variables setup done."
               kubectl delete secret --ignore-not-found $SECRET_NAME
               kubectl create secret docker-registry $SECRET_NAME \
-              --docker-server=https://${ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com \
+              --docker-server={{ .Values.ecrUrl }} \
               --docker-username=AWS \
               --docker-password="${TOKEN}" \
               --docker-email="${EMAIL}"
