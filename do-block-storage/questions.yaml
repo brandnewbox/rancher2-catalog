@@ -1,0 +1,6 @@
+questions:
+- variable: digitalOceanApiKey
+  description: "An API for communicating with DigitalOcean to set up block storage"
+  type: string
+  required: true
+  label: Digital Ocean API Key
