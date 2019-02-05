@@ -1,3 +1,4 @@
+namespace: default
 questions:
 - variable: serviceAccount
   default: "registry-updater"

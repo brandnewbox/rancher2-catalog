@@ -1,3 +1,4 @@
+namespace: kube-system
 questions:
 - variable: digitalOceanApiKey
   description: "An API for communicating with DigitalOcean to set up block storage"
