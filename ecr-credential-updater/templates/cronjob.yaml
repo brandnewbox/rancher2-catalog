@@ -36,11 +36,11 @@ spec:
               echo "All done."
             env:
             - name: AWS_DEFAULT_REGION
-              value: {{ .Values.aws.region | quoted }}
+              value: {{ .Values.aws.region }}
             - name: AWS_SECRET_ACCESS_KEY
-              value: {{ .Values.aws.secretKey | quoted }}
+              value: {{ .Values.aws.secretKey }}
             - name: AWS_ACCESS_KEY_ID
-              value: {{ .Values.aws.accessKeyId | quoted }}
+              value: {{ .Values.aws.accessKeyId }}
             image: odaniait/aws-kubectl:latest
             imagePullPolicy: IfNotPresent
             name: {{ template "ecr-credential-updater.fullname" . }}

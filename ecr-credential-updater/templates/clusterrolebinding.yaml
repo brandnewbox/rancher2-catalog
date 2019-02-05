@@ -8,4 +8,4 @@ roleRef:
   name: secret-manager
 subjects:
 - kind: ServiceAccount
-  name: {{ .Values.serviceAccount | quoted }}
+  name: {{ .Values.serviceAccount }}
