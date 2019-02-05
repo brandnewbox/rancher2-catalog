@@ -6,7 +6,6 @@ nameOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
-accountId:
 aws:
   region:
   secretKey:

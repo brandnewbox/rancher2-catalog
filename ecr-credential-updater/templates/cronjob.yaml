@@ -19,11 +19,10 @@ spec:
             - /bin/sh
             - -c
             - |-
-              ACCOUNT={{ .Values.accountId | quote }}
               REGION={{ .Values.aws.region | quote }}
               SECRET_NAME=${REGION}-ecr-registry
               EMAIL=anymail.doesnt.matter@email.com
-              TOKEN=`aws ecr get-login --region ${REGION} --registry-ids ${ACCOUNT} | cut -d' ' -f6`
+              TOKEN=`aws ecr get-login --region ${REGION} --no-include-email | cut -d' ' -f6`
               echo "ENV variables setup done."
               kubectl delete secret --ignore-not-found $SECRET_NAME
               kubectl create secret docker-registry $SECRET_NAME \

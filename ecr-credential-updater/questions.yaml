@@ -6,12 +6,6 @@ questions:
   required: false
   label: Service Account
   group: "Kubernetes Settings"
-- variable: accountId
-  description: The account ID of the ECR repository (https://XXXXX.dkr.ecr.${REGION}.amazonaws.com)
-  type: string
-  required: true
-  label: ECR Account ID
-  group: AWS Settings
 - variable: aws.region
   description: The AWS region to perform actions in
   type: string
