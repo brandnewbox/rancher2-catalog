@@ -19,8 +19,8 @@ spec:
             - /bin/sh
             - -c
             - |-
-              ACCOUNT={{ .Values.accountId }}
-              REGION={{ .Values.aws.region }}
+              ACCOUNT={{ .Values.accountId | quote }}
+              REGION={{ .Values.aws.region | quote }}
               SECRET_NAME=${REGION}-ecr-registry
               EMAIL=anymail.doesnt.matter@email.com
               TOKEN=`aws ecr get-login --region ${REGION} --registry-ids ${ACCOUNT} | cut -d' ' -f6`
@@ -36,11 +36,11 @@ spec:
               echo "All done."
             env:
             - name: AWS_DEFAULT_REGION
-              value: {{ .Values.aws.region }}
+              value: {{ .Values.aws.region | quote }}
             - name: AWS_SECRET_ACCESS_KEY
-              value: {{ .Values.aws.secretKey }}
+              value: {{ .Values.aws.secretKey | quote }}
             - name: AWS_ACCESS_KEY_ID
-              value: {{ .Values.aws.accessKeyId }}
+              value: {{ .Values.aws.accessKeyId | quote }}
             image: odaniait/aws-kubectl:latest
             imagePullPolicy: IfNotPresent
             name: {{ template "ecr-credential-updater.fullname" . }}
