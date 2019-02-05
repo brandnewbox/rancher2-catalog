@@ -31,7 +31,7 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "ecr-credential-updater.job" -}}
+{{- define "ecr-credential-updater.job" }}
 spec:
   template:
     metadata:
@@ -65,7 +65,7 @@ spec:
           value: {{ .Values.aws.accessKeyId | quote }}
         image: odaniait/aws-kubectl:latest
         imagePullPolicy: IfNotPresent
-        name: {{- template "ecr-credential-updater.fullname" . -}}
+        name: {{ template "ecr-credential-updater.fullname" . }}
         resources: {}
         securityContext:
           capabilities: {}
@@ -78,4 +78,4 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
       serviceAccount: {{ .Values.serviceAccount }}
-{{- end -}}
+{{- end }}

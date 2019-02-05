@@ -9,4 +9,4 @@ metadata:
   annotations:
     "helm.sh/hook": post-install
     "helm.sh/hook-delete-policy": hook-succeeded
-{{ template "ecr-credential-updater.job" . }}
+{{- include "ecr-credential-updater.job" . | indent 2 }}

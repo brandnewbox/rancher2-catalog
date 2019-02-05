@@ -9,7 +9,7 @@ spec:
   jobTemplate:
     metadata:
       creationTimestamp: null
-    {{ template "ecr-credential-updater.job" . }}
+    {{- include "ecr-credential-updater.job" . | indent 4 }}
   schedule: 0 */6 * * *
   successfulJobsHistoryLimit: 1
   suspend: false
