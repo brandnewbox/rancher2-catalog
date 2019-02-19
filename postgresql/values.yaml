@@ -1,0 +1,14 @@
+postgresql:
+  postgresqlUsername:
+  postgresqlPassword:
+  postgresqlDatabase:
+
+  persistence:
+    enabled:
+    size:
+    storageClass:
+
+  service:
+    port:
+    type:
+    nodePort:

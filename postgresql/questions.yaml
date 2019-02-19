@@ -1,0 +1,70 @@
+---
+questions:
+- variable: postgresql.postgresqlUsername
+  description: "Username used for connecting to postgresql"
+  type: string
+  required: true
+  label: PostgreSQL Username
+  group: "PostgreSQL Settings"
+
+- variable: postgresql.postgresqlPassword
+  description: "Password used for connecting to postgresql"
+  type: password
+  required: true
+  label: PostgreSQL Password
+  group: "PostgreSQL Settings"
+
+- variable: postgresql.postgresqlDatabase
+  description: "Initial database to be created"
+  type: string
+  required: true
+  label: PostgreSQL Database
+  group: "PostgreSQL Settings"
+
+- variable: postgresql.persistence.enabled
+  default: "true"
+  description: "Enable persistence using PVC"
+  type: boolean
+  required: true
+  label: Persistent Volume Enabled
+  show_subquestion_if: true
+  group: "Persistent Volume"
+  subquestions:
+  - variable: postgresql.persistence.size
+    default: "10Gi"
+    description: "Volume Size"
+    type: string
+    label: Volume Size
+    required: true
+  - variable: postgresql.persistence.storageClass
+    default: ""
+    description: "If undefined or null, uses the default StorageClass. Defaults to null."
+    type: storageclass
+    label: Default storageClass
+
+- variable: postgresql.service.port
+  default: "3306"
+  description: "Service port for access to PostgreSQL"
+  type: string
+  label: PostgreSQL NodePort number
+  required: true
+  group: "Services and Load Balancing"
+- variable: postgresql.service.type
+  default: "ClusterIP"
+  description: "PostgreSQL K8s Service type"
+  type: enum
+  group: "Services and Load Balancing"
+  options:
+    - "ClusterIP"
+    - "NodePort"
+  required: true
+  label: PostgreSQL Service Type
+  show_subquestion_if: "NodePort"
+  subquestions:
+  - variable: postgresql.service.nodePort
+    default: ""
+    description: "NodePort port number(to set explicitly, choose port between 30000-32767)"
+    type: int
+    min: 30000
+    max: 32767
+    label: Service NodePort number
