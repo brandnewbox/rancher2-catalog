@@ -43,7 +43,7 @@ questions:
     label: Default storageClass
 
 - variable: postgresql.service.port
-  default: "3306"
+  default: "5432"
   description: "Service port for access to PostgreSQL"
   type: string
   label: PostgreSQL NodePort number
